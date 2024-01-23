@@ -1,6 +1,9 @@
 ﻿namespace JobApplication_software_design.Models
 {
-    public class IEmployer
+    public interface IEmployer
     {
+        public int Id { get; set; }
+        public void postJob();
+        public void removeJob();
     }
 }
