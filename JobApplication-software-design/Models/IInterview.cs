@@ -2,10 +2,10 @@
 {
     public interface IInterview
     {
-        int Id { get; } // Interfaces can contain properties, but these cannot have a setter.
+        // Method to schedule an interview
+        void ScheduleInterview();
 
-        public void ScheduleInterview();
-
-        public void RemoveInterview();
+        // Method to remove a scheduled interview
+        void RemoveInterview();
     }
 }

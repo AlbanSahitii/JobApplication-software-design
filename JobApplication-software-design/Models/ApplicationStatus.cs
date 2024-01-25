@@ -6,8 +6,16 @@
         public string Name { get; set; }
         public string Description { get; set; }
 
-        // This method could return some status-related data, or perhaps a list of all statuses.
-        // The exact implementation will depend on your specific requirements.
+        public JobApplication JobApplication { get; set; }
+
+        public int JobApplicationId { get; set; }
+
+        // This class is used in a composition relationship with JobApplication.
+        // However, in this specific case, it's not typical to include a foreign key back to JobApplication
+        // because ApplicationStatus can be a shared resource across multiple JobApplications.
+        // If your design requires a direct link back to a specific JobApplication, include a foreign key.
+        // public int JobApplicationId { get; set; } // Uncomment if needed
+
         public string GetApplicationStatus()
         {
             // Implement the logic to get the application status details

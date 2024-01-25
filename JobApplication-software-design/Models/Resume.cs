@@ -1,44 +1,63 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
+﻿using System.Runtime.CompilerServices;
 
 namespace JobApplication_software_design.Models
 {
-    /*public class User
+    // Resume class implementing IResume interface
+    public class Resume : IResume
     {
-        // Assume that this class has its own properties and methods, which are not detailed in the UML diagram.
-    }*/
-
-    public class Resume //:IResume
-    {
-        public int Id { get; set; }
-        private User User { get; set; } // This field is private, so it's only accessible within this class.
-        protected string Content { get; set; } // This field is protected, so it's accessible within this class and any derived classes.
+        public int ResumeId { get; set; }
+        public string FilePath { get; set; }
         public DateTime LastUpdated { get; set; }
-        public string Title { get; set; }
+        public string Skills { get; set; }
 
-        public void AddPersonalInfo()
+        // Foreign key for JobApplication - represents the composition with JobApplication
+        public int JobApplicationId { get; set; }
+
+        // Navigation property for JobApplication - to access the related JobApplication object
+        public JobApplication JobApplication { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
+        public Resume()
         {
-            // Logic to add personal information to the resume
+            LastUpdated = DateTime.Now;
         }
 
+        
+       public void AddPersonalInfo(string personalInfo)
+        {
+
+        }
+
+        // Method to add educational background to the resume
         public void AddEducation()
         {
-            // Logic to add educational background to the resume
+
         }
 
+        // Method to add work experience to the resume
         public void AddWorkExperience()
         {
-            // Logic to add work experience to the resume
+
         }
 
-        public void AddSkill()
+        // Method to add skills to the resume
+        public  void AddSkill()
         {
-            // Logic to add skills to the resume
+
         }
 
+        // Method to retrieve and return resume details
         public string GetResumeDetails()
         {
-            // Logic to retrieve and return the resume details
-            return Content; // Assuming that 'Content' holds the full details of the resume
+            string resumeDetails = string.Empty;
+
+            //Fill Datas
+
+            return resumeDetails;
         }
+
+
+
+
     }
 }

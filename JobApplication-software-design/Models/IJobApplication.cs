@@ -2,8 +2,10 @@
 {
     public interface IJobApplication
     {
-        int Id { get; }
+        // Method to apply for a job
         void ApplyForJob();
+
+        // Method to cancel a job application
         void CancelApplication();
     }
 }

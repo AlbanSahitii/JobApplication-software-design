@@ -1,29 +1,32 @@
 ﻿using System;
+using System.Collections.Generic; // Required for using List
+
 namespace JobApplication_software_design.Models
 {
-    /*public class Employer
-    {
-        // Assuming this is meant to be 'Employer' and there is a typo.
-        // Define the Employer class properties and methods
-        // ...
-    }
-
-    public class JobCategory
-    {
-        // Define the JobCategory class properties and methods
-        // ...
-    }*/
-
     public class JobPosting
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        private Employer Employer { get; set; } // Assuming there's a typo in the UML class diagram ('Employe' should be 'Employer')
+
+        // Foreign key for Employer - represents the association with Employer
+        public int EmployerId { get; set; }
+
+        // Navigation property for Employer
+        public Employer Employer { get; set; }
+
+        // Foreign key for JobCategory - represents the aggregation with JobCategory
+        public int JobCategoryId { get; set; }
+
+        // Navigation property for JobCategory
         public JobCategory JobCategory { get; set; }
+
         protected string Location { get; set; }
         public DateTime Deadline { get; set; }
         public string Requirements { get; set; }
+
+        // Association with JobApplications
+        public virtual ICollection<JobApplication> JobApplications { get; set; }
 
         public void CreateJobPost()
         {

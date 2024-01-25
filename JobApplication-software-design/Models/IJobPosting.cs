@@ -2,10 +2,13 @@
 {
     public interface IJobPosting
     {
-        public int ID { get; set; }
-        public void createJobPost();
-        public void updateJobPost();
-        public void removeJobPost();
+        // Method to create a job posting
+        void CreateJobPost();
 
+        // Method to update an existing job posting
+        void UpdateJobPost();
+
+        // Method to remove a job posting
+        void RemoveJobPost();
     }
 }
