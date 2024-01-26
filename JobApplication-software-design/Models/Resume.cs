@@ -15,7 +15,7 @@ namespace JobApplication_software_design.Models
 
         // Navigation property for JobApplication - to access the related JobApplication object
         public JobApplication JobApplication { get; set; }
-        public string UserId { get; set; }
+       
         public User User { get; set; }
         public Resume()
         {

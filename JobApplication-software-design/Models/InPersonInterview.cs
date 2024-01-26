@@ -8,13 +8,13 @@
         protected string InterviewerFeedback { get; set; }
 
         // Foreign key for JobApplication - represents the association with JobApplication
-        public int JobApplicationId { get; set; }
+        // public int JobApplicationId { get; set; }
 
         public Interview Interview { get; set; }
         public int InterviewId { get; set; }
 
         // Navigation property for JobApplication - to access the related JobApplication object
-       //public JobApplication JobApplication { get; set; }
+        //public JobApplication JobApplication { get; set; }
 
         public void AddInPersonInterview()
         {

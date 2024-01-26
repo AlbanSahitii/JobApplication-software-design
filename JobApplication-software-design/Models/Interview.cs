@@ -18,10 +18,10 @@ namespace JobApplication_software_design.Models
         public string Location { get; set; }
         public string Notes { get; set; }
 
-        public IEnumerable<PhoneInterview> PhoneInterview { get; set; }
+       public PhoneInterview PhoneInterview { get; set; }
         public int PhoneInterviewId { get; set; }
 
-        public IEnumerable<InPersonInterview> InPersonInterview { get; set; }
+        public InPersonInterview InPersonInterview { get; set; }
         public int InPersonInterviewId { get; set; }
         public virtual void ScheduleInterview()
         {

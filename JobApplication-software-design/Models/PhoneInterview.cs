@@ -7,7 +7,7 @@
         private int Duration { get; set; } // Assuming this should be a private field
 
         // Foreign key for JobApplication - represents the association with JobApplication
-        public int JobApplicationId { get; set; }
+        //public int JobApplicationId { get; set; }
 
         // Navigation property for JobApplication - to access the related JobApplication object
         public JobApplication JobApplication { get; set; }

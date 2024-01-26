@@ -29,7 +29,7 @@ namespace JobApplication_software_design.Models
         public CoverLetter CoverLetter { get; set; }
 
         // Association with Interviews
-        public virtual ICollection<Interview> Interviews { get; set; }
+        public virtual IEnumerable<Interview> Interviews { get; set; }
         public int InterviewId { get; set; }
 
         public DateTime SubmissionDate { get; set; }
@@ -40,7 +40,7 @@ namespace JobApplication_software_design.Models
         public int ApplicationReviewId { get; set; }
         public int ResumeId { get; set; }
 
-        public ICollection<InPersonInterview> Interview { get; set; }
+       // public ICollection<InPersonInterview> Interview { get; set; }
 
 
         public ApplicationStatus ApplicationStatus { get; set; }

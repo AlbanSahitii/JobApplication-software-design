@@ -8,7 +8,7 @@ namespace JobApplication_software_design.Models
 
         // Foreign key for User
         // This assumes that the CoverLetter is associated with a User.
-        public string UserId { get; set; }
+        //public string UserId { get; set; }
 
         // Navigation property for User
         // This represents an association with the User who created the cover letter.

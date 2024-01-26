@@ -24,11 +24,11 @@ namespace JobApplication_software_design.Models
         public DateTime Date { get; set; }
 
         // Foreign key for ApplicationStatus
-        public int ApplicationStatusId { get; set; }
+       // public int ApplicationStatusId { get; set; }
 
         // Navigation property for ApplicationStatus
         // Indicates that ApplicationReview includes ApplicationStatus as part of its state.
-        public ApplicationStatus Status { get; set; }
+        //public ApplicationStatus Status { get; set; }
 
         public void ReviewApplication()
         {

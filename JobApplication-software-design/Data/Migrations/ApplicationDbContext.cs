@@ -16,98 +16,107 @@ namespace JobApplication_software_design.Data
         public DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
         public DbSet<CoverLetter> CoverLetters { get; set; }
         public DbSet<Employer> Employers { get; set; }
-        public DbSet<JobPosting> JobPostings { get; set; }
+        public DbSet<JobPosting> JobPosting { get; set; }
         public DbSet<JobCategory> JobCategories { get; set; }
-        public DbSet<PhoneInterview> PhoneInterviews { get; set; }
-        public DbSet<InPersonInterview> InPersonInterviews { get; set; }
+        public DbSet<PhoneInterview> PhoneInterview { get; set; }
+        public DbSet<InPersonInterview> InPersonInterview { get; set; }
         public DbSet<Resume> Resumes { get; set; }
         public DbSet<Interview> Interviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PhoneInterview>().ToTable("PhoneInterviews");
+            modelBuilder.Entity<InPersonInterview>().ToTable("InPersonInterviews");
+
             base.OnModelCreating(modelBuilder);
 
-            // User - ApplicationReview association
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.ApplicationReview)
-                .WithOne(ar => ar.Reviewer)
-                .HasForeignKey(ar => ar.ReviewerId);
+            // User to ApplicationReview (Association - One to Many)
+            modelBuilder.Entity<ApplicationReview>()
+                .HasOne(ar => ar.Reviewer)
+                .WithMany(u => u.ApplicationReview)
+                .HasForeignKey(ar => ar.ReviewerId)
+               .OnDelete(DeleteBehavior.Restrict);
 
-            // User - JobApplication association
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.JobApplications)
-                .WithOne(ja => ja.User)
+            // User to JobApplication (Association - One to Many)
+            modelBuilder.Entity<JobApplication>()
+                .HasOne(ja => ja.User)
+                .WithMany(u => u.JobApplications)
                 .HasForeignKey(ja => ja.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // JobApplication - Interview association
-            modelBuilder.Entity<JobApplication>()
-                .HasMany(ja => ja.Interviews)
-                .WithOne(i => i.JobApplication)
+            // JobApplication to Interview (Association - One to Many)
+            modelBuilder.Entity<Interview>()
+                .HasOne(i => i.JobApplication)
+                .WithMany(ja => ja.Interviews) // Assuming you have an Interviews collection in JobApplication
                 .HasForeignKey(i => i.JobApplicationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // JobApplication - JobPosting association
+            // JobApplication to JobPosting (Association - Many to One)
             modelBuilder.Entity<JobApplication>()
                 .HasOne(ja => ja.JobPosting)
                 .WithMany(jp => jp.JobApplications)
-                .HasForeignKey(ja => ja.JobPostingId);
+                .HasForeignKey(ja => ja.JobPostingId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // ApplicationReview - JobApplication composition
+            // ApplicationReview to JobApplication (Composition - One to One)
             modelBuilder.Entity<ApplicationReview>()
                 .HasOne(ar => ar.JobApplication)
                 .WithOne(ja => ja.ApplicationReview)
-                .HasForeignKey<ApplicationReview>(ar => ar.JobApplicationId);
+                .HasForeignKey<ApplicationReview>(ar => ar.JobApplicationId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-
-            // Resume - JobApplication composition
+            // Resume to JobApplication (Composition - One to One)
             modelBuilder.Entity<Resume>()
                 .HasOne(r => r.JobApplication)
                 .WithOne(ja => ja.Resume)
-                .HasForeignKey<Resume>(r => r.JobApplicationId);
+                .HasForeignKey<Resume>(r => r.JobApplicationId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // ApplicationStatus - JobApplication composition
+            // ApplicationStatus to JobApplication (Composition - One to One)
             modelBuilder.Entity<ApplicationStatus>()
                 .HasOne(ast => ast.JobApplication)
                 .WithOne(ja => ja.ApplicationStatus)
-                .HasForeignKey<ApplicationStatus>(ast => ast.JobApplicationId);
+                .HasForeignKey<ApplicationStatus>(ast => ast.JobApplicationId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // CoverLetter - JobApplication composition
+            // CoverLetter to JobApplication (Composition - One to One)
             modelBuilder.Entity<CoverLetter>()
                 .HasOne(cl => cl.JobApplication)
                 .WithOne(ja => ja.CoverLetter)
-                .HasForeignKey<CoverLetter>(cl => cl.JobApplicationId);
+                .HasForeignKey<CoverLetter>(cl => cl.JobApplicationId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Employer - JobPosting association
-            modelBuilder.Entity<Employer>()
-                .HasMany(e => e.JobPostings)
-                .WithOne(jp => jp.Employer)
-                .HasForeignKey(jp => jp.EmployerId);
+            // Employer to JobPosting (Association - One to Many)
+            modelBuilder.Entity<JobPosting>()
+                .HasOne(jp => jp.Employer)
+                .WithMany(e => e.JobPostings)
+                .HasForeignKey(jp => jp.EmployerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // JobPosting - JobCategory aggregation
+            // JobPosting to JobCategory (Aggregation - Many to One)
             modelBuilder.Entity<JobPosting>()
                 .HasOne(jp => jp.JobCategory)
-                .WithMany(jc => jc.JobPostings)
-                .HasForeignKey(jp => jp.JobCategoryId);
-
-            // Interview - PhoneInterview and InPersonInterview aggregation
-            // Here, adjust as necessary depending on your specific inheritance/aggregation strategy
-            modelBuilder.Entity<Interview>()
-                .HasMany(i => i.PhoneInterview)
-                .WithOne(pi => pi.Interview)
-                .HasForeignKey(pi => pi.InterviewId)
+                .WithMany(jc => jc.JobPosting)
+                .HasForeignKey(jp => jp.JobCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Interview>()
-                .HasMany(i => i.InPersonInterview)
-                .WithOne(ipi => ipi.Interview)
-                .HasForeignKey(ipi => ipi.InterviewId)
+            // Assuming InPersonInterview and PhoneInterview have a navigation property called InterviewId
+
+            modelBuilder.Entity<InPersonInterview>()
+            .HasOne(ipi => ipi.Interview)
+            .WithOne(i => i.InPersonInterview)
+            .HasForeignKey<InPersonInterview>(ipi => ipi.InterviewId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PhoneInterview>()
+                .HasOne(pi => pi.Interview)
+                .WithOne(i => i.PhoneInterview)
+                .HasForeignKey<PhoneInterview>(pi => pi.InterviewId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+
+
         }
-
-
-
-
-
     }
 }
