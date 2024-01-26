@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using JobApplication_software_design.Models;
+﻿using JobApplication_software_design.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobApplication_software_design.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
