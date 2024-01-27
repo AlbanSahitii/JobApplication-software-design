@@ -21,10 +21,9 @@ namespace  JobApplication_software_design.Areas.Identity.Pages.Account.Manage
         public static string Address => "AddressModel";
         public static string AddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, Address);
         public static string Education => "Edudation";
-        public static string EducationNavClass(ViewContext viewContext) => PageNavClass(viewContext, Skills);
-
-        public static string Picture => "Edudation";
-        public static string PictureNavClass(ViewContext viewContext) => PageNavClass(viewContext, Skills);
+        public static string EducationNavClass(ViewContext viewContext) => PageNavClass(viewContext, Education);
+        public static string Picture => "Picture";
+        public static string PictureNavClass(ViewContext viewContext) => PageNavClass(viewContext, Picture);
 
 
 
