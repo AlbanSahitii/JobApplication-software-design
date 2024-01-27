@@ -1,0 +1,18 @@
+﻿@page
+@model JobApplication_software_design.Areas.Identity.Pages.Account.Manage.SkillsModel
+@{
+    ViewData["Title"] = "Skills";
+    ViewData["ActivePage"] = ManageNavPages.Skills;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="Skills" class="form-control" placeholder="Please enter your skills." />
+        <label asp-for="Skills" class="form-label"></label>
+        <span asp-validation-for="Skills" class="text-danger"></span>
+    </div>
+    <button type="submit" asp-page-handler="UpdateSkills" class="btn btn-primary">Update Skills</button>
+</form>

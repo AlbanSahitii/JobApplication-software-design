@@ -1,0 +1,23 @@
+﻿@page
+@model JobApplication_software_design.Areas.Identity.Pages.Account.Manage.NameModel
+@{
+    ViewData["Title"] = "Name";
+    ViewData["ActivePage"] = ManageNavPages.Name;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="FirstName" class="form-control" placeholder="Please enter your first name." />
+        <label asp-for="FirstName" class="form-label"></label>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="LastName" class="form-control" placeholder="Please enter your last name." />
+        <label asp-for="LastName" class="form-label"></label>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <button type="submit" asp-page-handler="UpdateName" class="btn btn-primary">Update Name</button>
+</form>

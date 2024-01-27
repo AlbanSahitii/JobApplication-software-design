@@ -13,6 +13,17 @@ namespace  JobApplication_software_design.Areas.Identity.Pages.Account.Manage
     /// </summary>
     public static class ManageNavPages
     {
+
+        public static string Skills => "Skills";
+        public static string SkillsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Skills);
+        public static string Name => "NameModel";
+        public static string NameNavClass(ViewContext viewContext) => PageNavClass(viewContext, Name);
+        public static string Address => "AddressModel";
+        public static string AddressNavClass(ViewContext viewContext) => PageNavClass(viewContext, Address);
+
+
+
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.

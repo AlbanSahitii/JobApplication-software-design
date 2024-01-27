@@ -1,0 +1,18 @@
+﻿@page
+@model JobApplication_software_design.Areas.Identity.Pages.Account.Manage.AddressModel
+@{
+    ViewData["Title"] = "Address";
+    ViewData["ActivePage"] = ManageNavPages.Address;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="Address" class="form-control" placeholder="Please enter your address." />
+        <label asp-for="Address" class="form-label"></label>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <button type="submit" asp-page-handler="UpdateAddress" class="btn btn-primary">Update Address</button>
+</form>
