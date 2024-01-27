@@ -1,22 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using JobApplication_software_design.Data; // Adjust the namespace as per your project structure
-using System.Threading.Tasks;
-using JobApplication_software_design.Models;
 using Microsoft.AspNetCore.Identity;
+using JobApplication_software_design.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
 {
-    public class SkillsModel : PageModel
+    public interface ISkillsObserver
+    {
+        Task SkillsUpdated(string newSkills);
+    }
+
+    public class SkillsObserver : ISkillsObserver
     {
         private readonly UserManager<User> _userManager;
-        private readonly ApplicationDbContext _context;
 
-        public SkillsModel(UserManager<User> userManager, ApplicationDbContext context)
+        public SkillsObserver(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _context = context;
+        }
+
+        public async Task SkillsUpdated(string newSkills)
+        {
+            var user = await _userManager.GetUserAsync(null);
+            if (user != null)
+            {
+                user.Skills = newSkills;
+                await _userManager.UpdateAsync(user);
+            }
+        }
+    }
+    public interface ISkillsModelSubject
+    {
+        void Attach(ISkillsObserver observer);
+        void Detach(ISkillsObserver observer);
+        Task NotifySkillsUpdated();
+    }
+
+    public class SkillsModel : PageModel, ISkillsModelSubject
+    {
+        private readonly UserManager<User> _userManager;
+
+        public SkillsModel(UserManager<User> userManager)
+        {
+            _userManager = userManager;
         }
 
         [TempData]
@@ -24,6 +52,26 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
 
         [BindProperty]
         public string Skills { get; set; }
+
+        private readonly List<ISkillsObserver> _observers = new List<ISkillsObserver>();
+
+        public void Attach(ISkillsObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Detach(ISkillsObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public async Task NotifySkillsUpdated()
+        {
+            foreach (var observer in _observers)
+            {
+                await observer.SkillsUpdated(Skills);
+            }
+        }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -33,7 +81,7 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            Skills = user.Skills; // Assuming you have a Skills property in your User model
+            Skills = user.Skills;
 
             return Page();
         }
@@ -50,15 +98,10 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
             {
                 return Page();
             }
-
-            // Update Skills in the database
             user.Skills = Skills;
             await _userManager.UpdateAsync(user);
 
-            // You can also update the Skills directly in the database if necessary
-            // var userFromDb = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
-            // userFromDb.Skills = Skills;
-            // await _context.SaveChangesAsync();
+            await NotifySkillsUpdated();
 
             StatusMessage = "Skills updated successfully.";
             return RedirectToPage();

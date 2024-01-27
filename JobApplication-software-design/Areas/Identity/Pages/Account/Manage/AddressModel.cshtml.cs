@@ -6,7 +6,39 @@ using System.Threading.Tasks;
 
 namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
 {
-    public class AddressModel : PageModel
+    public interface IAddressObserver
+    {
+        Task AddressUpdated(string newAddress);
+    }
+
+    public class AddressObserver : IAddressObserver
+    {
+        private readonly UserManager<User> _userManager;
+
+        public AddressObserver(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public async Task AddressUpdated(string newAddress)
+        {
+            var user = await _userManager.GetUserAsync(null);
+            if (user != null)
+            {
+                user.Address = newAddress;
+                await _userManager.UpdateAsync(user);
+            }
+        }
+    }
+
+    public interface IAddressModelSubject
+    {
+        void Attach(IAddressObserver observer);
+        void Detach(IAddressObserver observer);
+        Task NotifyAddressUpdated();
+    }
+
+    public class AddressModel : PageModel, IAddressModelSubject
     {
         private readonly UserManager<User> _userManager;
 
@@ -20,6 +52,26 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
 
         [BindProperty]
         public string Address { get; set; }
+
+        private readonly List<IAddressObserver> _observers = new List<IAddressObserver>();
+
+        public void Attach(IAddressObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Detach(IAddressObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public async Task NotifyAddressUpdated()
+        {
+            foreach (var observer in _observers)
+            {
+                await observer.AddressUpdated(Address);
+            }
+        }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -49,6 +101,8 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
 
             user.Address = Address;
             await _userManager.UpdateAsync(user);
+
+            await NotifyAddressUpdated();
 
             StatusMessage = "Address updated successfully.";
             return RedirectToPage();
