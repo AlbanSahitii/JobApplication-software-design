@@ -1,0 +1,26 @@
+﻿@model JobApplication_software_design.Models.User
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="container mt-5">
+    <h2>User Profile</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="@Model.Picture" alt="Profile Picture" class="img-fluid rounded-circle" />
+                </div>
+                <div class="col-md-9">
+                    <h3>@Model.FirstName @Model.LastName</h3>
+                    <p><strong>Email:</strong> @Model.Email</p>
+                    <p><strong>Address:</strong> @Model.Address</p>
+                    <p><strong>Skills:</strong> @Model.Skills</p>
+                    <p><strong>Education:</strong> @Model.Education</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
