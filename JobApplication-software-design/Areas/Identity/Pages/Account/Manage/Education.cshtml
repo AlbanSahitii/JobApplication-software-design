@@ -1,0 +1,18 @@
+﻿@page
+@model JobApplication_software_design.Areas.Identity.Pages.Account.Manage.EducationModel
+@{
+    ViewData["Title"] = "Education";
+    ViewData["ActivePage"] = ManageNavPages.Education;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="Education" class="form-control" placeholder="Please enter your Education." />
+        <label asp-for="Education" class="form-label"></label>
+        <span asp-validation-for="Education" class="text-danger"></span>
+    </div>
+    <button type="submit" asp-page-handler="UpdateEducation" class="btn btn-primary">Update Education</button>
+</form>

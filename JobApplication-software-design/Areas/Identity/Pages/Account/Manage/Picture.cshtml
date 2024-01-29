@@ -1,0 +1,18 @@
+﻿@page
+@model JobApplication_software_design.Areas.Identity.Pages.Account.Manage.PictureModel
+@{
+    ViewData["Title"] = "Picture";
+    ViewData["ActivePage"] = ManageNavPages.Picture;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form method="post">
+    <div class="form-floating mb-3">
+        <input asp-for="Picture" class="form-control" placeholder="Please enter your Picture." />
+        <label asp-for="Picture" class="form-label"></label>
+        <span asp-validation-for="Picture" class="text-danger"></span>
+    </div>
+    <button type="submit" asp-page-handler="UpdatePicture" class="btn btn-primary">Update Picture</button>
+</form>
