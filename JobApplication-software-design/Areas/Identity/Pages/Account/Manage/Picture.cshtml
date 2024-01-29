@@ -8,11 +8,20 @@
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 
-<form method="post">
+<form method="post"  enctype="multipart/form-data">
     <div class="form-floating mb-3">
-        <input asp-for="Picture" class="form-control" placeholder="Please enter your Picture." />
+        <input asp-for="Picture" class="form-control" placeholder="Please enter your Picture Name." />
         <label asp-for="Picture" class="form-label"></label>
         <span asp-validation-for="Picture" class="text-danger"></span>
     </div>
+
+    <div class="form-floating mb-3">
+        <input type="file" asp-for="PicturePath" class="form-control" placeholder="Please upload your Picture." />
+        <label asp-for="PicturePath" class="form-label"></label>
+    </div>
     <button type="submit" asp-page-handler="UpdatePicture" class="btn btn-primary">Update Picture</button>
+    <div class="d-flex justify-content-center w-100">
+        <img height="150" src="https://localhost:7072/@Model.Picture" alt="Profile Picture" class="rounded-circle" style="aspect-ratio: 1 / 1 ; object-fit: cover" />
+    </div>
+
 </form>

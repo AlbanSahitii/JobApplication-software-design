@@ -3,7 +3,33 @@
     ViewData["Title"] = "Index";
 }
 
+<a asp-action="Add" class="btn btn-primary"> Add User </a>
+
+<table class="table table-bordered w-100">
+    <thead>
+        <tr class="table-primary">
+            <th>
+                Id
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Image
+            </th>
+        </tr>
+    </thead>
+    <tbody>
 @foreach(var obj in Model)
 {
-    @obj.UserName
+    <tr>
+                <td>@obj.Id</td>
+                <td>@obj.UserName</td>
+                <td>
+                    <img height="100" src="https://localhost:7072/@obj.Picture" alt="Profile Picture" class="rounded-circle" style="aspect-ratio: 1 / 1 ; object-fit: cover" />
+                </td>
+
+    </tr>
 }
+    </tbody>
+    </table>

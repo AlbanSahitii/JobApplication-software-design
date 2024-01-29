@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
 using JobApplication_software_design.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
 {
@@ -14,10 +15,11 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
     public class PictureObserver : IPictureObserver
     {
         private readonly UserManager<User> _userManager;
-
-        public PictureObserver(UserManager<User> userManager)
+        public readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
+        public PictureObserver(UserManager<User> userManager, Microsoft.AspNetCore.Hosting.IHostingEnvironment environment)
         {
             _userManager = userManager;
+            _environment = environment;
         }
 
         public async Task PictureUpdated(string newPicture)
@@ -41,10 +43,12 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
     public class PictureModel : PageModel, IPictureModelSubject
     {
         private readonly UserManager<User> _userManager;
+        public readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
 
-        public PictureModel(UserManager<User> userManager)
+        public PictureModel(UserManager<User> userManager, Microsoft.AspNetCore.Hosting.IHostingEnvironment environment)
         {
             _userManager = userManager;
+            _environment = environment;
         }
 
         [TempData]
@@ -52,6 +56,7 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
 
         [BindProperty]
         public string Picture { get; set; }
+        public IFormFile PicturePath { get; set; }
 
         private readonly List<IPictureObserver> _observers = new List<IPictureObserver>();
 
@@ -98,8 +103,13 @@ namespace JobApplication_software_design.Areas.Identity.Pages.Account.Manage
             {
                 return Page();
             }
+            var path = _environment.WebRootPath;
+            var filePath = "img/" + PicturePath.FileName;
+            var fullPath = Path.Combine(path, filePath);
+            FileStream stream = new FileStream(fullPath, FileMode.Create);
+            PicturePath.CopyTo(stream);
 
-            user.Picture = Picture;
+            user.Picture = filePath;
             await _userManager.UpdateAsync(user);
 
             await NotifyPictureUpdated();
