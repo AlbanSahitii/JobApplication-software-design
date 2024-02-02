@@ -1,0 +1,79 @@
+﻿@model JobApplication_software_design.Models.JobApplication
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>JobApplication</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JobPostingId" class="control-label"></label>
+                <select asp-for="JobPostingId" class="form-control" asp-items="ViewBag.JobPostingId"></select>
+                <span asp-validation-for="JobPostingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InterviewId" class="control-label"></label>
+                <input asp-for="InterviewId" class="form-control" />
+                <span asp-validation-for="InterviewId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubmissionDate" class="control-label"></label>
+                <input asp-for="SubmissionDate" class="form-control" />
+                <span asp-validation-for="SubmissionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastUpdated" class="control-label"></label>
+                <input asp-for="LastUpdated" class="form-control" />
+                <span asp-validation-for="LastUpdated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationReviewId" class="control-label"></label>
+                <input asp-for="ApplicationReviewId" class="form-control" />
+                <span asp-validation-for="ApplicationReviewId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResumeId" class="control-label"></label>
+                <input asp-for="ResumeId" class="form-control" />
+                <span asp-validation-for="ResumeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationStatusId" class="control-label"></label>
+                <input asp-for="ApplicationStatusId" class="form-control" />
+                <span asp-validation-for="ApplicationStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoverLetterId" class="control-label"></label>
+                <input asp-for="CoverLetterId" class="form-control" />
+                <span asp-validation-for="CoverLetterId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

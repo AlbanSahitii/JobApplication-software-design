@@ -10,7 +10,7 @@
         //public int JobApplicationId { get; set; }
 
         // Navigation property for JobApplication - to access the related JobApplication object
-        public JobApplication JobApplication { get; set; }
+        public JobApplication? JobApplication { get; set; }
 
         public Interview Interview { get; set; }
         public int InterviewId { get; set; }

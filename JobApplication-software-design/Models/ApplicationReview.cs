@@ -7,21 +7,21 @@ namespace JobApplication_software_design.Models
         public int Id { get; set; }
 
         // Foreign key for JobApplication (Composition)
-        public int JobApplicationId { get; set; }
+        public int? JobApplicationId { get; set; }
 
         // Navigation property for JobApplication (Composition)
         // This indicates a strong lifecycle dependency on JobApplication.
-        public JobApplication JobApplication { get; set; }
+        public JobApplication? JobApplication { get; set; }
 
         // Foreign key for User (Reviewer)
-        public string ReviewerId { get; set; }
+        public string? ReviewerId { get; set; }
 
         // Navigation property for User (Reviewer)
         // This represents an association but with independent lifecycles.
-        public User Reviewer { get; set; }
+        public User? Reviewer { get; set; }
 
         public string Feedback { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
         // Foreign key for ApplicationStatus
        // public int ApplicationStatusId { get; set; }

@@ -7,16 +7,16 @@ namespace JobApplication_software_design.Models
     {
         public int ResumeId { get; set; }
         public string FilePath { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; }= DateTime.Now;
         public string Skills { get; set; }
 
         // Foreign key for JobApplication - represents the composition with JobApplication
-        public int JobApplicationId { get; set; }
+        public int? JobApplicationId { get; set; }
 
         // Navigation property for JobApplication - to access the related JobApplication object
-        public JobApplication JobApplication { get; set; }
+        public JobApplication? JobApplication { get; set; }
        
-        public User User { get; set; }
+        public User? User { get; set; }
         public Resume()
         {
             LastUpdated = DateTime.Now;

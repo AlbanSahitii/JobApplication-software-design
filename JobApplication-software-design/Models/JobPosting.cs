@@ -13,20 +13,20 @@ namespace JobApplication_software_design.Models
         public int EmployerId { get; set; }
 
         // Navigation property for Employer
-        public Employer Employer { get; set; }
+        public Employer? Employer { get; set; }
 
         // Foreign key for JobCategory - represents the aggregation with JobCategory
         public int JobCategoryId { get; set; }
 
         // Navigation property for JobCategory
-        public JobCategory JobCategory { get; set; }
+        public JobCategory? JobCategory { get; set; }
 
         protected string Location { get; set; }
         public DateTime Deadline { get; set; }
         public string Requirements { get; set; }
 
         // Association with JobApplications
-        public virtual ICollection<JobApplication> JobApplications { get; set; }
+        public virtual ICollection<JobApplication>? JobApplications { get; set; }
 
         public void CreateJobPost()
         {

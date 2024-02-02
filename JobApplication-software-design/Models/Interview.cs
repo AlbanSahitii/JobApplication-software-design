@@ -10,11 +10,11 @@ namespace JobApplication_software_design.Models
         
 
         // Navigation property for JobApplication - to access the related JobApplication object
-        public JobApplication JobApplication { get; set; }
-        public int JobApplicationId { get; set; }
+        public JobApplication? JobApplication { get; set; }
+        public int? JobApplicationId { get; set; }
 
-        protected User Interviewer { get; set; }
-        protected DateTime Date { get; set; }
+        protected User? Interviewer { get; set; }
+        protected DateTime Date { get; set; }= DateTime.Now;
         public string Location { get; set; }
         public string Notes { get; set; }
 

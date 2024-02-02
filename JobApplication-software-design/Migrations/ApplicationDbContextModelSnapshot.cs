@@ -37,17 +37,17 @@ namespace JobApplication_software_design.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JobApplicationId")
+                    b.Property<int?>("JobApplicationId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReviewerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JobApplicationId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[JobApplicationId] IS NOT NULL");
 
                     b.HasIndex("ReviewerId");
 
@@ -66,7 +66,7 @@ namespace JobApplication_software_design.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JobApplicationId")
+                    b.Property<int?>("JobApplicationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -76,7 +76,8 @@ namespace JobApplication_software_design.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("JobApplicationId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[JobApplicationId] IS NOT NULL");
 
                     b.ToTable("ApplicationStatuses");
                 });
@@ -93,7 +94,7 @@ namespace JobApplication_software_design.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JobApplicationId")
+                    b.Property<int?>("JobApplicationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastUpdated")
@@ -109,7 +110,8 @@ namespace JobApplication_software_design.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("JobApplicationId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[JobApplicationId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -160,7 +162,7 @@ namespace JobApplication_software_design.Migrations
                     b.Property<int>("InPersonInterviewId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JobApplicationId")
+                    b.Property<int?>("JobApplicationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
@@ -191,22 +193,22 @@ namespace JobApplication_software_design.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicationReviewId")
+                    b.Property<int?>("ApplicationReviewId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ApplicationStatusId")
+                    b.Property<int?>("ApplicationStatusId")
                         .HasColumnType("int");
 
                     b.Property<int>("CoverLetterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("InterviewId")
+                    b.Property<int?>("InterviewId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JobPostingId")
+                    b.Property<int?>("JobPostingId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastUpdated")
+                    b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
@@ -216,14 +218,13 @@ namespace JobApplication_software_design.Migrations
                     b.Property<int>("ResumeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -311,7 +312,7 @@ namespace JobApplication_software_design.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JobApplicationId")
+                    b.Property<int?>("JobApplicationId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastUpdated")
@@ -327,7 +328,8 @@ namespace JobApplication_software_design.Migrations
                     b.HasKey("ResumeId");
 
                     b.HasIndex("JobApplicationId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[JobApplicationId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -603,14 +605,12 @@ namespace JobApplication_software_design.Migrations
                     b.HasOne("JobApplication_software_design.Models.JobApplication", "JobApplication")
                         .WithOne("ApplicationReview")
                         .HasForeignKey("JobApplication_software_design.Models.ApplicationReview", "JobApplicationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("JobApplication_software_design.Models.User", "Reviewer")
                         .WithMany("ApplicationReview")
                         .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("JobApplication");
 
@@ -622,8 +622,7 @@ namespace JobApplication_software_design.Migrations
                     b.HasOne("JobApplication_software_design.Models.JobApplication", "JobApplication")
                         .WithOne("ApplicationStatus")
                         .HasForeignKey("JobApplication_software_design.Models.ApplicationStatus", "JobApplicationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("JobApplication");
                 });
@@ -633,8 +632,7 @@ namespace JobApplication_software_design.Migrations
                     b.HasOne("JobApplication_software_design.Models.JobApplication", "JobApplication")
                         .WithOne("CoverLetter")
                         .HasForeignKey("JobApplication_software_design.Models.CoverLetter", "JobApplicationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("JobApplication_software_design.Models.User", "User")
                         .WithMany("CoverLetter")
@@ -650,8 +648,7 @@ namespace JobApplication_software_design.Migrations
                     b.HasOne("JobApplication_software_design.Models.JobApplication", "JobApplication")
                         .WithMany("Interviews")
                         .HasForeignKey("JobApplicationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("JobApplication");
                 });
@@ -661,20 +658,16 @@ namespace JobApplication_software_design.Migrations
                     b.HasOne("JobApplication_software_design.Models.JobPosting", "JobPosting")
                         .WithMany("JobApplications")
                         .HasForeignKey("JobPostingId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("JobApplication_software_design.Models.ApplicationStatus", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatusId");
 
                     b.HasOne("JobApplication_software_design.Models.User", "User")
                         .WithMany("JobApplications")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("JobPosting");
 
@@ -707,8 +700,7 @@ namespace JobApplication_software_design.Migrations
                     b.HasOne("JobApplication_software_design.Models.JobApplication", "JobApplication")
                         .WithOne("Resume")
                         .HasForeignKey("JobApplication_software_design.Models.Resume", "JobApplicationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("JobApplication_software_design.Models.User", "User")
                         .WithMany("Resumes")
@@ -820,19 +812,15 @@ namespace JobApplication_software_design.Migrations
 
             modelBuilder.Entity("JobApplication_software_design.Models.JobApplication", b =>
                 {
-                    b.Navigation("ApplicationReview")
-                        .IsRequired();
+                    b.Navigation("ApplicationReview");
 
-                    b.Navigation("ApplicationStatus")
-                        .IsRequired();
+                    b.Navigation("ApplicationStatus");
 
-                    b.Navigation("CoverLetter")
-                        .IsRequired();
+                    b.Navigation("CoverLetter");
 
                     b.Navigation("Interviews");
 
-                    b.Navigation("Resume")
-                        .IsRequired();
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("JobApplication_software_design.Models.JobCategory", b =>

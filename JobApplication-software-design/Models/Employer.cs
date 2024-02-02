@@ -11,7 +11,7 @@
 
         // Assuming that Employer has an association with JobPosting
         // A list to hold the association with JobPostings
-        public virtual ICollection<JobPosting> JobPostings { get; set; }
+        public virtual ICollection<JobPosting>? JobPostings { get; set; }
 
         // Implementation of IEmployer interface methods
         public void PostJob()

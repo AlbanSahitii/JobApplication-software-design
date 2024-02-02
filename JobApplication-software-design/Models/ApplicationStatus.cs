@@ -6,9 +6,9 @@
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public JobApplication JobApplication { get; set; }
+        public JobApplication? JobApplication { get; set; }
 
-        public int JobApplicationId { get; set; }
+        public int? JobApplicationId { get; set; }
 
         // This class is used in a composition relationship with JobApplication.
         // However, in this specific case, it's not typical to include a foreign key back to JobApplication

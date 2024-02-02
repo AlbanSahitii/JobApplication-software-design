@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public IEnumerable<JobPosting> JobPosting { get; set; }
+        public IEnumerable<JobPosting>? JobPosting { get; set; }
         public int JobPostingId { get; set; }
 
 

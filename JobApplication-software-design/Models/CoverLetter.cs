@@ -12,18 +12,18 @@ namespace JobApplication_software_design.Models
 
         // Navigation property for User
         // This represents an association with the User who created the cover letter.
-        public User User { get; set; }
+        public User? User { get; set; }
 
         // Foreign key for JobApplication
         // This is part of the composition relationship with JobApplication.
-        public int JobApplicationId { get; set; }
+        public int? JobApplicationId { get; set; }
 
         // Navigation property for JobApplication
         // This indicates that CoverLetter is a component of JobApplication.
-        public JobApplication JobApplication { get; set; }
+        public JobApplication? JobApplication { get; set; }
 
         public string Content { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
         public string Title { get; set; }
 
         public void AddCoverLetter()

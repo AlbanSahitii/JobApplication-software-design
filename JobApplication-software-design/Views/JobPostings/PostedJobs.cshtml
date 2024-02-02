@@ -1,0 +1,28 @@
+﻿@model IEnumerable<JobApplication_software_design.Models.JobPosting>
+
+@{
+    ViewData["Title"] = "Posted Jobs";
+}
+
+<h1>Posted Jobs</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 border-primary" style="border-width: 4px">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                        <p class="card-text">Employer: @Html.DisplayFor(modelItem => item.Employer.Id)</p>
+                        <p class="card-text">Category: @Html.DisplayFor(modelItem => item.JobCategory.Id)</p>
+                        <p class="card-text">Deadline: @Html.DisplayFor(modelItem => item.Deadline)</p>
+                        <p class="card-text">Requirements: @Html.DisplayFor(modelItem => item.Requirements)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
